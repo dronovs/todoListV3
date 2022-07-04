@@ -49,14 +49,13 @@ function view () {
 
             todoItem.remove();
         },
-        setOptionsData() {
+        setOptionsData() { // вот здесь я собираю значения опций из селекта, а что с ними делать - ума не приложу
             let select = document.querySelector('.todo-options');
             select = Array.from(select);
 
             let optionsValues = select.map(item => {
                 return item.innerHTML;
             })
-            console.log(optionsValues);
             return optionsValues;
             },
 

@@ -55,7 +55,8 @@ function controller (view, model, config) {
 
     }
     const optionsHandler = () => {
-        return view.setOptionsData();
+        const options = view.setOptionsData();
+        console.log(options);
     }
 
 

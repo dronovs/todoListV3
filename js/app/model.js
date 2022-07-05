@@ -6,10 +6,14 @@ function model () {
     return {
         dbKey: null,
         currentId: null,
+        selectValue: null,
 
         setData (data) {
             let localData = structuredClone(data);
             localData.id = this.currentId;
+            localData.select = this.selectValue;
+
+            console.log(localData);
 
             const dataFromDB = localStorage.getItem(this.dbKey);
             let response = null;
@@ -46,7 +50,6 @@ function model () {
         removeDataFromDB(data) {
             let currentId = event.target.id;
             let savedData = structuredClone(data);
-            const wrapper = document.querySelector('.data-todo-item');
             let filteredData = null;
 
             filteredData = savedData.filter(item => {
@@ -55,6 +58,17 @@ function model () {
 
             filteredData = JSON.stringify(filteredData);
             if(localStorage.getItem(this.dbKey).length !== 0) localStorage.setItem(this.dbKey, filteredData);
+        },
+
+        setSelectData (selectValue) {
+            this.selectValue = selectValue;
+        },
+
+        submitSelectValues () {
+            let data = localStorage.getItem(this.dbKey);
+            let localData = structuredClone(data);
+            localData = JSON.parse(localData);
+            console.log(localData);
         },
     }
 }

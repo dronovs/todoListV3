@@ -13,9 +13,9 @@ function view () {
                 <div class="taskHeading">${data.title}</div>
                 <div class="taskDescription">${data.description}</div>
             <select class="todo-options" name="status" id="todo-select">
-                <option value="select">No status</option>
-                <option value="select">Pending</option>
-                <option value="select">Completed</option>
+                <option value="No status" id="option-nostatus">No status</option>
+                <option value="Pending" id="option-pending">Pending</option>
+                <option value="Completed" id="option-completed">Completed</option>
             </select>
             </div>
             <button id="${data.id}" class="data-delete-btn"></button>
@@ -49,19 +49,21 @@ function view () {
 
             todoItem.remove();
         },
-        setOptionsData() { // вот здесь я собираю значения опций из селекта, а что с ними делать - ума не приложу
-            let select = document.querySelector('.todo-options');
-            select = Array.from(select);
 
-            let optionsValues = select.map(item => {
-                return item.innerHTML;
-            })
-            return optionsValues;
-            },
+        validateTodoTemplate() {
+            const todos = this.todoContainer.querySelectorAll('.taskWrapper');
+            return todos.length > 0;
+        },
+
+        getSelectValue () {
+            if (!this.validateTodoTemplate()) return 'No status';
+            if (this.validateTodoTemplate()) return document.querySelector('#todo-select').value;
+        },
 
         init(form, todoContainer) {
             this.form = form;
             this.todoContainer = todoContainer;
-        }
+        },
+
     }
 }

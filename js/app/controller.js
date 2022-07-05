@@ -15,10 +15,13 @@ function controller (view, model, config) {
 
         const data = inputs instanceof Array ? inputs : Array.from(inputs);
 
+        optionsHandler();
+
         return data.reduce((acc, input) => {
             acc[input.name] = input.value;
             return acc;
         }, {});
+
     }
 
     const submitHandler = event => {
@@ -32,7 +35,6 @@ function controller (view, model, config) {
         if (!savedData.success) throw new Error('Data is not provided');
 
         view.addTodo(savedData.data);
-
         view.clearForm();
     }
 
@@ -55,13 +57,17 @@ function controller (view, model, config) {
 
     }
     const optionsHandler = () => {
-        const options = view.setOptionsData();
-        console.log(options);
+        let selectValue = view.getSelectValue();
+        model.setSelectData(selectValue);
+        return selectValue;
     }
 
+    const selectStorageChange = () => {
+        model.submitSelectValues();
+    }
 
     form.addEventListener('submit', submitHandler);
     window.addEventListener('DOMContentLoaded', loadedHandler);
     todoContainer.addEventListener('click', removeTodoHandler);
-    todoContainer.addEventListener('change', optionsHandler);
+    todoContainer.addEventListener('change', selectStorageChange);
 }

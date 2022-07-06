@@ -11,9 +11,8 @@ function model () {
         setData (data) {
             let localData = structuredClone(data);
             localData.id = this.currentId;
-            localData.select = this.selectValue;
+            localData.option = this.selectValue;
 
-            console.log(this.selectValue);
 
             const dataFromDB = localStorage.getItem(this.dbKey);
             let response = null;
@@ -70,12 +69,14 @@ function model () {
             localData = JSON.parse(localData);
 
             localData.forEach(function (item) {
-                if (item['id'] == todoItemId) item['select'] = event.target.value;
+                if (item['id'] == todoItemId) item['option'] = event.target.value;
             })
             console.log(event.target.value);
             localData = JSON.stringify(localData);
 
             localStorage.setItem(this.dbKey, localData);
+
+            return event.target.value;
         },
     }
 }

@@ -43,7 +43,7 @@ function controller (view, model, config) {
         const data = model.getData();
         if (!data) return;
 
-        view.addTodos(data);
+        view.renderTodosFromDB(data);
     };
 
     const removeTodoHandler = event => {

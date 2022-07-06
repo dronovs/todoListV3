@@ -13,7 +13,7 @@ function model () {
             localData.id = this.currentId;
             localData.select = this.selectValue;
 
-            console.log(localData);
+            console.log(this.selectValue);
 
             const dataFromDB = localStorage.getItem(this.dbKey);
             let response = null;
@@ -64,11 +64,18 @@ function model () {
             this.selectValue = selectValue;
         },
 
-        submitSelectValues () {
+        submitSelectValues (todoItemId) {
             let data = localStorage.getItem(this.dbKey);
             let localData = structuredClone(data);
             localData = JSON.parse(localData);
-            console.log(localData);
+
+            localData.forEach(function (item) {
+                if (item['id'] == todoItemId) item['select'] = event.target.value;
+            })
+            console.log(event.target.value);
+            localData = JSON.stringify(localData);
+
+            localStorage.setItem(this.dbKey, localData);
         },
     }
 }

@@ -15,7 +15,7 @@ function controller (view, model, config) {
 
         const data = inputs instanceof Array ? inputs : Array.from(inputs);
 
-        optionsHandler();
+        // optionsHandler();
 
         return data.reduce((acc, input) => {
             acc[input.name] = input.value;
@@ -27,6 +27,7 @@ function controller (view, model, config) {
     const submitHandler = event => {
         event.preventDefault();
         event.stopPropagation();
+
 
         const inputs = form.querySelectorAll('input, textarea');
         const data = fetchInputsData(inputs);
@@ -59,12 +60,16 @@ function controller (view, model, config) {
     const optionsHandler = () => {
         let selectValue = view.getSelectValue();
         model.setSelectData(selectValue);
-        return selectValue;
     }
 
     const selectStorageChange = () => {
-        model.submitSelectValues();
+        const todoItem = event.target.parentElement.parentElement.parentElement;
+        const todoItemId = todoItem.getAttribute('data-todo-id');
+
+        model.submitSelectValues(todoItemId);
     }
+    optionsHandler();
+
 
     form.addEventListener('submit', submitHandler);
     window.addEventListener('DOMContentLoaded', loadedHandler);
